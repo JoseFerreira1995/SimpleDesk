@@ -1,5 +1,5 @@
-import { GithubIcon, LinkedinIcon } from "lucide-react";
 import AppsCard from "../components/AppsCard";
+import Footer from "./Footer/Footer";
 import Header from "./Header/Header";
 
 export default function LandingPage() {
@@ -22,12 +22,7 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
-      <footer>
-        <div className="flex justify-center gap-10 mt-[15%] p-[10%]">
-          <GithubIcon></GithubIcon>
-          <LinkedinIcon></LinkedinIcon>
-        </div>
-      </footer>
+      <Footer></Footer>
     </>
   );
 }
