@@ -1,8 +1,24 @@
 import { useState } from "react";
 import "./TodoMainPage.css";
 
+type Todo = {
+  todo: string;
+};
+
 export default function TodoMainPage() {
   const [text, setText] = useState<string>(" ");
+  const [todo, setTodo] = useState<Todo[]>([{ todo: "" }]);
+
+  //Todo: 
+
+  // Add checkbox to todos
+
+  // Remove todos when click on checkbox 
+
+  const handleClick = () => {
+    todo.push({ todo: text });
+    setText("");
+  };
 
   return (
     <>
@@ -21,10 +37,17 @@ export default function TodoMainPage() {
           ></input>
           <button
             className="border-b-orange-950 border-s-2"
-            onClick={() => setText("")}
+            onClick={() => handleClick()}
           >
             Add
           </button>
+        </div>
+        <div className="border border-b-amber-900 m-[20%] text-center ">
+          <ul>
+            {todo.map((todos) => (
+              <li>{todos.todo}</li>
+            ))}
+          </ul>
         </div>
       </section>
     </>
