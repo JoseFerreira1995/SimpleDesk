@@ -25,10 +25,7 @@ Designed with simplicity, speed, and a playful look.
 ---
 
 ## Preview
-
-> 
->  
-> 
+<img width="852" height="775" alt="Captura de ecrã 2025-12-03, às 17 11 06" src="https://github.com/user-attachments/assets/480f9960-ee2a-49eb-b222-52bbfa1e199f" />
 
 ---
 
