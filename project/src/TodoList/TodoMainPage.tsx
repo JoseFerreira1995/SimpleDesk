@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { Input } from "../components/ui/input";
+import { Checkbox } from "../components/ui/checkbox";
 import { Button } from "../components/ui/button";
 import { Label } from "../components/ui/label";
 import {
   Card,
-  CardAction,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -23,17 +22,16 @@ type Todo = {
 let nextId: number = 0;
 
 export default function TodoMainPage() {
-  const [text, setText] = useState<string>(" ");
+  const [text, setText] = useState<string>("");
   const [todo, setTodo] = useState<Todo[]>([]);
 
   const handleClick = () => {
     const time = new Date();
     setTodo([
       ...todo,
-      { id: nextId++, todo: text, isChecked: false, time: time.getDate() },
+      { id: nextId++, todo: text, isChecked: false, time: time.getUTCDay() },
     ]);
     setText("");
-    console.log(todo);
   };
 
   const handleDeleteTodo = (itemsId: number) => {
@@ -53,21 +51,25 @@ export default function TodoMainPage() {
   const inputTodo = todo.map((todos) => (
     <Card className="w-full max-w-sm">
       <CardHeader>
-        <CardTitle className="flex gap-2 justify-center">
-          <span
-            className="font-landing text-3xl"
-            style={{
-              textDecoration: todos.isChecked ? "line-through" : "none",
-            }}
-          >
-            {todos.todo}
-          </span>
-          <input
-            className="font-landing"
-            type="checkbox"
+        <CardTitle className="flex gap-2 justify-center items-center">
+          {todos.todo === "" ? (
+            <span className="font-landing text-3xl text-red-300">
+              {todos.isChecked ? "No I'm not" : "Am I procrastinating?"}
+            </span>
+          ) : (
+            <span
+              className="font-landing text-3xl"
+              style={{
+                textDecoration: todos.isChecked ? "line-through" : "none",
+              }}
+            >
+              {todos.todo}
+            </span>
+          )}
+          <Checkbox
             checked={todos.isChecked}
             onClick={() => handleChangeBox(todos.id)}
-          ></input>
+          ></Checkbox>
         </CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-2">
