@@ -1,53 +1,120 @@
 import { useState } from "react";
+import { Input } from "../components/ui/input";
+import { Button } from "../components/ui/button";
+import { Label } from "../components/ui/label";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "../components/ui/card";
 import "./TodoMainPage.css";
 
 type Todo = {
+  id: number;
   todo: string;
+  isChecked: boolean;
+  time: number;
 };
+
+let nextId: number = 0;
 
 export default function TodoMainPage() {
   const [text, setText] = useState<string>(" ");
-  const [todo, setTodo] = useState<Todo[]>([{ todo: "" }]);
-
-  //Todo: 
-
-  // Add checkbox to todos
-
-  // Remove todos when click on checkbox 
+  const [todo, setTodo] = useState<Todo[]>([]);
 
   const handleClick = () => {
-    todo.push({ todo: text });
+    const time = new Date();
+    setTodo([
+      ...todo,
+      { id: nextId++, todo: text, isChecked: false, time: time.getDate() },
+    ]);
     setText("");
+    console.log(todo);
   };
+
+  const handleDeleteTodo = (itemsId: number) => {
+    const deleteTodo = todo.filter((obj) => obj.id !== itemsId);
+    setTodo(deleteTodo);
+  };
+
+  const handleChangeBox = (item: number) => {
+    const change = todo.map((element) =>
+      element.id === item
+        ? { ...element, isChecked: !element.isChecked }
+        : element
+    );
+    setTodo(change);
+  };
+
+  const inputTodo = todo.map((todos) => (
+    <Card className="w-full max-w-sm">
+      <CardHeader>
+        <CardTitle className="flex gap-2 justify-center">
+          <span
+            className="font-landing text-3xl"
+            style={{
+              textDecoration: todos.isChecked ? "line-through" : "none",
+            }}
+          >
+            {todos.todo}
+          </span>
+          <input
+            className="font-landing"
+            type="checkbox"
+            checked={todos.isChecked}
+            onClick={() => handleChangeBox(todos.id)}
+          ></input>
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="flex flex-col gap-2">
+        <span className="font-landing text-2xl">Day: {todos.time}</span>
+      </CardContent>
+
+      <CardFooter className="flex-col gap-2">
+        <Button
+          className="w-full bg-red-600 text-amber-50 font-landing text-2xl hover:bg-red-400"
+          onClick={() => handleDeleteTodo(todos.id)}
+        >
+          Delete
+        </Button>
+      </CardFooter>
+    </Card>
+  ));
 
   return (
     <>
       <header>
         <div className="flex justify-center mt-[10%]">
-          <h1 className="text-4xl font-landing">Todo List</h1>
+          <h1 className="text-5xl font-landing font-bold">Todo List</h1>
         </div>
       </header>
       <section>
-        <div className="flex flex-col mt-[10%] ">
-          <h2>Add Todo</h2>
-          <input
-            className="bg-amber-200"
+        <div className="flex justify-center mt-[10%] ml-[40%] max-w-sm items-center gap-2 ">
+          <Label className="font-landing text-2xl">Add Todo</Label>
+          <Input
+            className=" text-center"
             value={text}
             onChange={(event) => setText(event.target.value)}
-          ></input>
-          <button
-            className="border-b-orange-950 border-s-2"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleClick();
+              }
+            }}
+          ></Input>
+          <Button
+            className="font-landing font-bold "
             onClick={() => handleClick()}
           >
             Add
-          </button>
+          </Button>
         </div>
-        <div className="border border-b-amber-900 m-[20%] text-center ">
-          <ul>
-            {todo.map((todos) => (
-              <li>{todos.todo}</li>
-            ))}
-          </ul>
+
+        <div className="grid grid-cols-3 m-[20%] text-center gap-2 ">
+          {inputTodo}
         </div>
       </section>
     </>
