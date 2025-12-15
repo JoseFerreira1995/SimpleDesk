@@ -11,25 +11,31 @@ import {
   CardTitle,
 } from "../components/ui/card";
 import "./TodoMainPage.css";
+import { HomeIcon } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 type Todo = {
   id: number;
   todo: string;
   isChecked: boolean;
-  time: number;
+  day: number;
+  month: number;
 };
 
 let nextId: number = 0;
 
 export default function TodoMainPage() {
+  const navigate = useNavigate();
   const [text, setText] = useState<string>("");
   const [todo, setTodo] = useState<Todo[]>([]);
 
   const handleClick = () => {
     const time = new Date();
+    const day = time.getDate();
+    const month = time.getMonth();
     setTodo([
       ...todo,
-      { id: nextId++, todo: text, isChecked: false, time: time.getUTCDay() },
+      { id: nextId++, todo: text, isChecked: false, day: day, month: month },
     ]);
     setText("");
   };
@@ -49,7 +55,7 @@ export default function TodoMainPage() {
   };
 
   const inputTodo = todo.map((todos) => (
-    <Card className="w-full max-w-sm">
+    <Card className="w-full max-w-sm bg-amber-50">
       <CardHeader>
         <CardTitle className="flex gap-2 justify-center items-center">
           {todos.todo === "" ? (
@@ -67,13 +73,16 @@ export default function TodoMainPage() {
             </span>
           )}
           <Checkbox
+            className="bg-white"
             checked={todos.isChecked}
             onClick={() => handleChangeBox(todos.id)}
           ></Checkbox>
         </CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-2">
-        <span className="font-landing text-2xl">Day: {todos.time}</span>
+        <span className="font-landing text-2xl">
+          Date: {todos.day}/{todos.month}
+        </span>
       </CardContent>
 
       <CardFooter className="flex-col gap-2">
@@ -90,15 +99,16 @@ export default function TodoMainPage() {
   return (
     <>
       <header>
-        <div className="flex justify-center mt-[10%]">
+        <HomeIcon className="m-[3%]" onClick={() => navigate("/")}></HomeIcon>
+        <div className="flex justify-center mt-[5%]">
           <h1 className="text-5xl font-landing font-bold">Todo List</h1>
         </div>
       </header>
       <section>
-        <div className="flex justify-center mt-[10%] ml-[40%] max-w-sm items-center gap-2 ">
+        <div className="flex justify-center mt-[10%] ml-[36%] max-w-sm items-center gap-2 ">
           <Label className="font-landing text-2xl">Add Todo</Label>
           <Input
-            className=" text-center"
+            className=" text-center bg-amber-50 "
             value={text}
             onChange={(event) => setText(event.target.value)}
             onKeyDown={(e) => {
@@ -115,7 +125,7 @@ export default function TodoMainPage() {
           </Button>
         </div>
 
-        <div className="grid grid-cols-3 m-[20%] text-center gap-2 ">
+        <div className="grid grid-cols-3 m-[15%] text-center gap-2 ">
           {inputTodo}
         </div>
       </section>
