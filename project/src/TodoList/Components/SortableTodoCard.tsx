@@ -34,7 +34,6 @@ export default function SortableTodoCard({
   return (
     <div ref={setNodeRef} style={style} {...attributes}>
       <Card className="w-full max-w-sm bg-amber-50 ">
-        {/* Drag handle */}
         <div className="flex justify-center pt-2">
           <div {...listeners} className="cursor-grab active:cursor-grabbing">
             <GripVertical />

@@ -95,7 +95,7 @@ export default function TodoMainPage() {
             items={todo.map((t) => t)}
             strategy={rectSortingStrategy}
           >
-            <div className="grid grid-cols-3 m-[15%] text-center gap-2 ">
+            <div className="grid grid-cols-4 m-[10%] text-center gap-2 ">
               {todo.map((todos) => (
                 <SortableTodoCard
                   key={todos.id}
