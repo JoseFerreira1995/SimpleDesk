@@ -1,26 +1,18 @@
 import { useState } from "react";
 import { Input } from "../components/ui/input";
-import { Checkbox } from "../components/ui/checkbox";
 import { Button } from "../components/ui/button";
 import { Label } from "../components/ui/label";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "../components/ui/card";
-import "./TodoMainPage.css";
+
 import { HomeIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-
-type Todo = {
-  id: number;
-  todo: string;
-  isChecked: boolean;
-  day: number;
-  month: number;
-};
+import { closestCenter, DndContext, type DragEndEvent } from "@dnd-kit/core";
+import {
+  arrayMove,
+  rectSortingStrategy,
+  SortableContext,
+} from "@dnd-kit/sortable";
+import type { Todo } from "./types";
+import SortableTodoCard from "./Components/SortableTodoCard";
 
 let nextId: number = 0;
 
@@ -54,47 +46,17 @@ export default function TodoMainPage() {
     setTodo(change);
   };
 
-  const inputTodo = todo.map((todos) => (
-    <Card className="w-full max-w-sm bg-amber-50">
-      <CardHeader>
-        <CardTitle className="flex gap-2 justify-center items-center">
-          {todos.todo === "" ? (
-            <span className="font-landing text-3xl text-red-300">
-              {todos.isChecked ? "No I'm not" : "Am I procrastinating?"}
-            </span>
-          ) : (
-            <span
-              className="font-landing text-3xl"
-              style={{
-                textDecoration: todos.isChecked ? "line-through" : "none",
-              }}
-            >
-              {todos.todo}
-            </span>
-          )}
-          <Checkbox
-            className="bg-white"
-            checked={todos.isChecked}
-            onClick={() => handleChangeBox(todos.id)}
-          ></Checkbox>
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="flex flex-col gap-2">
-        <span className="font-landing text-2xl">
-          Date: {todos.day}/{todos.month}
-        </span>
-      </CardContent>
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
 
-      <CardFooter className="flex-col gap-2">
-        <Button
-          className="w-full bg-red-600 text-amber-50 font-landing text-2xl hover:bg-red-400"
-          onClick={() => handleDeleteTodo(todos.id)}
-        >
-          Delete
-        </Button>
-      </CardFooter>
-    </Card>
-  ));
+    if (!over || active.id === over.id) return;
+
+    setTodo((items) => {
+      const oldIndex = items.findIndex((i) => i.id === active.id);
+      const newIndex = items.findIndex((i) => i.id === over.id);
+      return arrayMove(items, oldIndex, newIndex);
+    });
+  };
 
   return (
     <>
@@ -125,9 +87,26 @@ export default function TodoMainPage() {
           </Button>
         </div>
 
-        <div className="grid grid-cols-3 m-[15%] text-center gap-2 ">
-          {inputTodo}
-        </div>
+        <DndContext
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+        >
+          <SortableContext
+            items={todo.map((t) => t)}
+            strategy={rectSortingStrategy}
+          >
+            <div className="grid grid-cols-3 m-[15%] text-center gap-2 ">
+              {todo.map((todos) => (
+                <SortableTodoCard
+                  key={todos.id}
+                  todo={todos}
+                  onDelete={handleDeleteTodo}
+                  onToggle={handleChangeBox}
+                />
+              ))}
+            </div>
+          </SortableContext>
+        </DndContext>
       </section>
     </>
   );
