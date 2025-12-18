@@ -18,9 +18,31 @@ import {
 } from "../components/ui/card";
 import { ToggleGroup, ToggleGroupItem } from "../components/ui/toggle-group";
 import { Label } from "../components/ui/label";
+import { useEffect } from "react";
+import {
+  getWeatherByCityName,
+  getWeatherByGeoLocation,
+} from "../services/endpoint";
 
 export default function WeatherMainPage() {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    getWeatherByGeoLocation(41.1579, -8.6291)
+      .then((data) => {
+        console.log("API RESPONSE-->", data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    getWeatherByCityName("Porto")
+      .then((data) => {
+        console.log("CITY RESPONSE->", data);
+      })
+      .catch((error) => console.error(error));
+  }, []);
+
   return (
     <>
       {/* Header Section*/}
