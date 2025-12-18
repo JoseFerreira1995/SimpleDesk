@@ -11,6 +11,14 @@
   --color-regal-blue: #243c5a; 
 }
 
+.input-primary {
+  --ring: var(--primary);
+}
+
+.input-secondary {
+  --ring: var(--secondary);
+}
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -62,7 +70,7 @@
   --popover-foreground: oklch(0.141 0.005 285.823);
   --primary: oklch(0.852 0.199 91.936);
   --primary-foreground: oklch(0.421 0.095 57.708);
-  --secondary: oklch(0.967 0.001 286.375);
+  --secondary: oklch(0.59 0.14 242);
   --secondary-foreground: oklch(0.21 0.006 285.885);
   --muted: oklch(0.967 0.001 286.375);
   --muted-foreground: oklch(0.552 0.016 285.938);
