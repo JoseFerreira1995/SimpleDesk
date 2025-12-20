@@ -59,7 +59,7 @@ export default function WeatherMainPage() {
             onSubmit={(e) => {
               e.preventDefault();
               setCity(input);
-              console.log(data);
+              console.log(currentWeather);
               console.log(forecast);
             }}
           >
