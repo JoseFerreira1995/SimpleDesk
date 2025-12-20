@@ -74,6 +74,8 @@ npm run dev
 
 - Vite
 
+- Tanstack Query
+
 
 
 ## License
