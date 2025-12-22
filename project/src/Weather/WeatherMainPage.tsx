@@ -5,7 +5,7 @@ import {
   SunriseIcon,
   SunsetIcon,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { data, useNavigate } from "react-router-dom";
 import { Input } from "../components/ui/input";
 import {
   Card,
@@ -30,7 +30,11 @@ export default function WeatherMainPage() {
   const [city, setCity] = useState<string>("Porto");
 
   const { data: currentWeather, isError, isLoading } = useWeatherByCity(city);
-  const { data: forecast } = useWeatherForecast(city);
+  const {
+    data: forecast,
+    isError: foreCastError,
+    isLoading: foreCastLoading,
+  } = useWeatherForecast(city);
 
   if (isLoading) {
     return <p>Loading</p>;
@@ -38,6 +42,14 @@ export default function WeatherMainPage() {
 
   if (isError) {
     return console.log("ERROR");
+  }
+
+  if (foreCastError) {
+    return <p>Loading</p>;
+  }
+
+  if (foreCastLoading) {
+    return console.log("ERROR FORECAST");
   }
   const sunriseTime = new Date(currentWeather.sys.sunrise * 1000);
   const sunSetTime = new Date(currentWeather.sys.sunset * 1000);
@@ -60,7 +72,7 @@ export default function WeatherMainPage() {
               e.preventDefault();
               setCity(input);
               console.log(currentWeather);
-              console.log(forecast);
+              console.log("Forecast--->", forecast);
             }}
           >
             <Input
@@ -106,8 +118,12 @@ export default function WeatherMainPage() {
                     </CardDescription>
 
                     <div className="flex justify-center gap-6 mt-3 text-sm text-muted-foreground">
-                      <span>Min: {Math.floor(currentWeather.main.temp_min)}°</span>
-                      <span>Max: {Math.round(currentWeather.main.temp_max)}°</span>
+                      <span>
+                        Min: {Math.floor(currentWeather.main.temp_min)}°
+                      </span>
+                      <span>
+                        Max: {Math.round(currentWeather.main.temp_max)}°
+                      </span>
                     </div>
                   </div>
 
@@ -132,7 +148,9 @@ export default function WeatherMainPage() {
                       },
                       {
                         label: "Wind",
-                        value: `${Math.round(currentWeather.wind.speed * 3.6)} km/h`,
+                        value: `${Math.round(
+                          currentWeather.wind.speed * 3.6
+                        )} km/h`,
                       },
                     ].map((item) => (
                       <div
@@ -185,15 +203,44 @@ export default function WeatherMainPage() {
               </Card>
 
               {/* 5 day forecast */}
-              <Card className="bg-sky-50 w-[18%]">
-                <CardHeader className="flex items-center gap-3">
+              <Card className="bg-sky-50 w-[18%] rounded-xl shadow-sm">
+                <CardHeader className="flex items-center gap-3 border-b border-sky-100 pb-3">
                   <Calendar1Icon className="text-sky-500"></Calendar1Icon>
-                  <CardTitle className="text-sky-500">5 Day Forecast</CardTitle>
+                  <CardTitle className="text-sky-500 text-lg">
+                    5 Day Forecast
+                  </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="flex bg-sky-300  p-4 rounded-md">
-                    <Label className="text-sm">Weather Description</Label>
-                    <Label>Temperature</Label>
+                <CardContent className="pt-4">
+                  <div className="flex flex-col gap-3">
+                    {forecast &&
+                      forecast.list
+                        .filter((item) => item.dt_txt.includes("12:00:00"))
+                        .map((element) => {
+                          const date = new Date(element.dt * 1000).getDate();
+                          const tempColor =
+                            element.main.temp > 25
+                              ? "text-red-500"
+                              : element.main.temp < 10
+                              ? "text-blue-500"
+                              : "text-sky-900";
+
+                          return (
+                            <div
+                              key={element.dt_txt}
+                              className="flex items-center justify-between rounded-lg bg-white px-5 py-3 shadow-sm hover:bg-sky-100 transition"
+                            >
+                              <span className="text-sm text-sky-700 font-medium">
+                                {date}
+                              </span>
+
+                              <span
+                                className={`text-lg font-semibold ${tempColor}`}
+                              >
+                                {Math.round(element.main.temp)}°
+                              </span>
+                            </div>
+                          );
+                        })}
                   </div>
                 </CardContent>
               </Card>

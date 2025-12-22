@@ -6,7 +6,7 @@ const BASE_URL = "https://api.openweathermap.org/data/2.5";
 
 export const getWeatherForecast = async (city: string) => {
   const response = await fetch(
-    `${BASE_URL}/forecast?q=${city}&appid=${API_KEY}`
+    `${BASE_URL}/forecast?q=${city}&appid=${API_KEY}&units=metric`
   );
 
   if (!response.ok) {
