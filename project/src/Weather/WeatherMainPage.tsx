@@ -1,4 +1,4 @@
-import { HomeIcon } from "lucide-react";
+import { HomeIcon, Key } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 import { useState } from "react";
@@ -8,31 +8,42 @@ import useWeatherForecast from "../hooks/useWeatherForecast";
 import ForecastBar from "./Components/ForecastBar";
 import MainWeatherCard from "./Components/MainWeatherCard";
 import SearchCity from "./Components/SearchCity";
+import { useSearchByName } from "../hooks/useSearchByName";
+import { useDefounce } from "../hooks/useDebounce";
+import ErrorPage from "./Components/ErrorPage";
+import LoadingSkeleton from "./Components/LoadingSkeleton";
 
 export default function WeatherMainPage() {
   const navigate = useNavigate();
 
   const [input, setInput] = useState("");
   const [city, setCity] = useState<string>("Porto");
+  const debounceSearch = useDefounce(input, 200);
 
   const { data: currentWeather, isError, isLoading } = useWeatherByCity(city);
-  console.log(currentWeather);
+
   const {
     data: forecast,
     isError: foreCastError,
     isLoading: foreCastLoading,
   } = useWeatherForecast(city);
 
-  if (isLoading && foreCastLoading) {
-    return <p>Loading</p>;
+  const {
+    data: searchCity,
+    isError: errorSearch,
+    isLoading: leadingSearch,
+  } = useSearchByName(debounceSearch);
+
+  if (isError || foreCastError || errorSearch) {
+    return <ErrorPage />;
   }
 
-  if (isError || foreCastError) {
-    return console.log("ERROR");
+  if (isLoading && foreCastLoading && leadingSearch) {
+    return <LoadingSkeleton></LoadingSkeleton>;
   }
 
   if (!currentWeather) {
-    return null;
+    return <LoadingSkeleton></LoadingSkeleton>;
   }
 
   return (
@@ -47,12 +58,30 @@ export default function WeatherMainPage() {
       </header>
 
       <section>
-        <div className="flex justify-center m-[5%] gap-5 ">
+        <div className=" relative flex justify-center m-[5%] gap-5 ">
           <SearchCity
             input={input}
             onInputChange={setInput}
             onSearch={() => setCity(input)}
+            onEnter={() => setInput("")}
           />
+
+          {searchCity && searchCity.length > 0 && (
+            <ul className="absolute top-full mt-1 w-full bg-white rounded-md shadow-lg border z-10">
+              {searchCity.map((city: any) => (
+                <li
+                  key={`${city.lat}-${city.lon}`}
+                  onClick={() => {
+                    setCity(city.name);
+                    setInput("");
+                  }}
+                  className="px-4 py-2 hover:bg-sky-100 cursor-pointer text-sm"
+                >
+                  {city.name} {city.country}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
 
         {currentWeather && (
