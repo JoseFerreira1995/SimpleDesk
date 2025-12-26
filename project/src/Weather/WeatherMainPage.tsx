@@ -1,27 +1,13 @@
-import {
-  Calendar1Icon,
-  HomeIcon,
-  LocateFixedIcon,
-  SunriseIcon,
-  SunsetIcon,
-} from "lucide-react";
-import { data, useNavigate } from "react-router-dom";
-import { Input } from "../components/ui/input";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "../components/ui/card";
-import { ToggleGroup, ToggleGroupItem } from "../components/ui/toggle-group";
-import { Label } from "../components/ui/label";
+import { HomeIcon } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 import { useState } from "react";
 
 import useWeatherByCity from "../hooks/useWeatherByCity";
 import useWeatherForecast from "../hooks/useWeatherForecast";
+import ForecastBar from "./Components/ForecastBar";
+import MainWeatherCard from "./Components/MainWeatherCard";
+import SearchCity from "./Components/SearchCity";
 
 export default function WeatherMainPage() {
   const navigate = useNavigate();
@@ -30,29 +16,24 @@ export default function WeatherMainPage() {
   const [city, setCity] = useState<string>("Porto");
 
   const { data: currentWeather, isError, isLoading } = useWeatherByCity(city);
+  console.log(currentWeather);
   const {
     data: forecast,
     isError: foreCastError,
     isLoading: foreCastLoading,
   } = useWeatherForecast(city);
 
-  if (isLoading) {
+  if (isLoading && foreCastLoading) {
     return <p>Loading</p>;
   }
 
-  if (isError) {
+  if (isError || foreCastError) {
     return console.log("ERROR");
   }
 
-  if (foreCastError) {
-    return <p>Loading</p>;
+  if (!currentWeather) {
+    return null;
   }
-
-  if (foreCastLoading) {
-    return console.log("ERROR FORECAST");
-  }
-  const sunriseTime = new Date(currentWeather.sys.sunrise * 1000);
-  const sunSetTime = new Date(currentWeather.sys.sunset * 1000);
 
   return (
     <>
@@ -67,183 +48,18 @@ export default function WeatherMainPage() {
 
       <section>
         <div className="flex justify-center m-[5%] gap-5 ">
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              setCity(input);
-              console.log(currentWeather);
-              console.log("Forecast--->", forecast);
-            }}
-          >
-            <Input
-              className="text-center bg-sky-50 w-150 input-secondary font-landing "
-              placeholder="Location/City"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-            ></Input>
-          </form>
-          <ToggleGroup type="multiple">
-            <ToggleGroupItem value="c">C°</ToggleGroupItem>
-            <ToggleGroupItem value="c">F°</ToggleGroupItem>
-            <ToggleGroupItem value="c">F°</ToggleGroupItem>
-          </ToggleGroup>
+          <SearchCity
+            input={input}
+            onInputChange={setInput}
+            onSearch={() => setCity(input)}
+          />
         </div>
 
         {currentWeather && (
           <>
             <div className="flex justify-center gap-10 m-[5%]">
-              <Card className="bg-sky-50 w-[45%] rounded-2xl shadow-lg">
-                {/* HEADER */}
-                <CardHeader className="flex flex-row items-center gap-3 border-b pb-4">
-                  <LocateFixedIcon className="text-sky-500" />
-                  <div>
-                    <CardTitle className="text-xl font-semibold">
-                      {currentWeather.name}
-                    </CardTitle>
-                    <CardDescription className="text-sm">
-                      {currentWeather.sys.country}
-                    </CardDescription>
-                  </div>
-                </CardHeader>
-
-                {/* MAIN CONTENT */}
-                <CardContent className="mt-6 space-y-6">
-                  {/* Temperature */}
-                  <div className="text-center">
-                    <CardTitle className="text-7xl font-bold">
-                      {Math.round(currentWeather.main.temp)}°
-                    </CardTitle>
-                    <CardDescription className="capitalize text-base">
-                      {currentWeather.weather[0].description}
-                    </CardDescription>
-
-                    <div className="flex justify-center gap-6 mt-3 text-sm text-muted-foreground">
-                      <span>
-                        Min: {Math.floor(currentWeather.main.temp_min)}°
-                      </span>
-                      <span>
-                        Max: {Math.round(currentWeather.main.temp_max)}°
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* STATS GRID */}
-                  <div className="grid grid-cols-2 gap-4">
-                    {[
-                      {
-                        label: "Feels Like",
-                        value: `${Math.round(currentWeather.main.feels_like)}°`,
-                      },
-                      {
-                        label: "Humidity",
-                        value: `${currentWeather.main.humidity}%`,
-                      },
-                      {
-                        label: "Pressure",
-                        value: `${currentWeather.main.pressure} hPa`,
-                      },
-                      {
-                        label: "Visibility",
-                        value: `${currentWeather.visibility / 1000} km`,
-                      },
-                      {
-                        label: "Wind",
-                        value: `${Math.round(
-                          currentWeather.wind.speed * 3.6
-                        )} km/h`,
-                      },
-                    ].map((item) => (
-                      <div
-                        key={item.label}
-                        className="bg-sky-200/60 rounded-xl p-4 flex flex-col gap-1"
-                      >
-                        <span className="text-xs text-muted-foreground">
-                          {item.label}
-                        </span>
-                        <span className="text-lg font-semibold">
-                          {item.value}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-
-                {/* FOOTER */}
-                <CardFooter className="flex gap-4 pt-6 border-t">
-                  <div className="flex items-center gap-3 bg-orange-200 w-1/2 p-4 rounded-xl">
-                    <SunriseIcon className="bg-orange-500 text-white rounded-md p-1" />
-                    <div className="flex flex-col">
-                      <span className="text-xs text-muted-foreground">
-                        Sunrise
-                      </span>
-                      <span className="font-semibold">
-                        {sunriseTime.toLocaleTimeString([], {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        })}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-3 bg-fuchsia-200 w-1/2 p-4 rounded-xl">
-                    <SunsetIcon className="bg-fuchsia-500 text-white rounded-md p-1" />
-                    <div className="flex flex-col">
-                      <span className="text-xs text-muted-foreground">
-                        Sunset
-                      </span>
-                      <span className="font-semibold">
-                        {sunSetTime.toLocaleTimeString([], {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        })}
-                      </span>
-                    </div>
-                  </div>
-                </CardFooter>
-              </Card>
-
-              {/* 5 day forecast */}
-              <Card className="bg-sky-50 w-[18%] rounded-xl shadow-sm">
-                <CardHeader className="flex items-center gap-3 border-b border-sky-100 pb-3">
-                  <Calendar1Icon className="text-sky-500"></Calendar1Icon>
-                  <CardTitle className="text-sky-500 text-lg">
-                    5 Day Forecast
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="pt-4">
-                  <div className="flex flex-col gap-3">
-                    {forecast &&
-                      forecast.list
-                        .filter((item) => item.dt_txt.includes("12:00:00"))
-                        .map((element) => {
-                          const date = new Date(element.dt * 1000).getDate();
-                          const tempColor =
-                            element.main.temp > 25
-                              ? "text-red-500"
-                              : element.main.temp < 10
-                              ? "text-blue-500"
-                              : "text-sky-900";
-
-                          return (
-                            <div
-                              key={element.dt_txt}
-                              className="flex items-center justify-between rounded-lg bg-white px-5 py-3 shadow-sm hover:bg-sky-100 transition"
-                            >
-                              <span className="text-sm text-sky-700 font-medium">
-                                {date}
-                              </span>
-
-                              <span
-                                className={`text-lg font-semibold ${tempColor}`}
-                              >
-                                {Math.round(element.main.temp)}°
-                              </span>
-                            </div>
-                          );
-                        })}
-                  </div>
-                </CardContent>
-              </Card>
+              <MainWeatherCard currentWeather={currentWeather} />
+              <ForecastBar forecast={forecast} />
             </div>
           </>
         )}
