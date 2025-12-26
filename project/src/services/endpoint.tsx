@@ -1,6 +1,6 @@
 const API_KEY = "57f92327e627e53f4d784b6513b38b05";
 const BASE_URL = "https://api.openweathermap.org/data/2.5";
-//const GEO_URL = "https://api.openweathermap.org/geo/1.0";
+const GEO_URL = "https://api.openweathermap.org/geo/1.0";
 
 export const getWeatherForecast = async (city: string) => {
   const response = await fetch(
@@ -22,8 +22,23 @@ export const getWeatherByCityName = async (city: string) => {
   );
 
   if (!response.ok) {
-    console.log("Error trying to access");
+    throw new Error("Error trying to access");
   }
   const data = await response.json();
+  return data;
+};
+
+//http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
+
+export const getCityName = async (cityName: string) => {
+  if (cityName.length < 2) return [];
+  const response = await fetch(
+    `${GEO_URL}/direct?q=${cityName}&limit=5&appid=${API_KEY}`
+  );
+  if (!response.ok) {
+    throw new Error("Error trying to search country/city");
+  }
+  const data = await response.json();
+
   return data;
 };

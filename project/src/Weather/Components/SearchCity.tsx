@@ -5,15 +5,22 @@ type Props = {
   input: string;
   onSearch: () => void;
   onInputChange: (value: string) => void;
+  onEnter: () => void;
 };
 
-export default function SearchCity({ input, onSearch, onInputChange }: Props) {
+export default function SearchCity({
+  input,
+  onSearch,
+  onInputChange,
+  onEnter,
+}: Props) {
   return (
     <>
       <form
         onSubmit={(e) => {
           e.preventDefault();
           onSearch();
+          onEnter();
         }}
       >
         <Input
