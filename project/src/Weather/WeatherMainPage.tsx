@@ -1,4 +1,4 @@
-import { HomeIcon, Key } from "lucide-react";
+import { HomeIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 import { useState } from "react";
@@ -17,6 +17,7 @@ export default function WeatherMainPage() {
   const navigate = useNavigate();
 
   const [input, setInput] = useState("");
+  const [isOpen, setIsOpen] = useState<boolean>(true);
   const [city, setCity] = useState<string>("Porto");
   const debounceSearch = useDefounce(input, 200);
 
@@ -63,17 +64,19 @@ export default function WeatherMainPage() {
             input={input}
             onInputChange={setInput}
             onSearch={() => setCity(input)}
-            onEnter={() => setInput("")}
+            openDropdown={() => setIsOpen(true)}
           />
 
-          {searchCity && searchCity.length > 0 && (
+          {searchCity && searchCity.length > 0 && isOpen && (
             <ul className="absolute top-full mt-1 w-full bg-white rounded-md shadow-lg border z-10">
               {searchCity.map((city: any) => (
+                //todo: set input to ("") when selecting the city: criate a boolean state (isOpen?)
                 <li
                   key={`${city.lat}-${city.lon}`}
                   onClick={() => {
                     setCity(city.name);
-                    setInput("");
+                    setInput(city.name);
+                    setIsOpen(false);
                   }}
                   className="px-4 py-2 hover:bg-sky-100 cursor-pointer text-sm"
                 >
