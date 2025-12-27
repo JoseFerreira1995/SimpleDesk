@@ -5,14 +5,14 @@ type Props = {
   input: string;
   onSearch: () => void;
   onInputChange: (value: string) => void;
-  onEnter: () => void;
+  openDropdown: () => void;
 };
 
 export default function SearchCity({
   input,
   onSearch,
   onInputChange,
-  onEnter,
+  openDropdown,
 }: Props) {
   return (
     <>
@@ -20,14 +20,16 @@ export default function SearchCity({
         onSubmit={(e) => {
           e.preventDefault();
           onSearch();
-          onEnter();
         }}
       >
         <Input
           className="text-center bg-sky-50 w-150 input-secondary font-landing "
           placeholder="Location/City"
           value={input}
-          onChange={(e) => onInputChange(e.target.value)}
+          onChange={(e) => {
+            onInputChange(e.target.value);
+            openDropdown();
+          }}
         ></Input>
       </form>
       <ToggleGroup type="multiple">
