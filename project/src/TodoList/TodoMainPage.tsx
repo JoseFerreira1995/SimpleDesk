@@ -13,6 +13,7 @@ import {
 } from "@dnd-kit/sortable";
 import type { Todo } from "./types";
 import SortableTodoCard from "./Components/SortableTodoCard";
+import { ModeToggle } from "../components/modeToggle";
 
 let nextId: number = 0;
 
@@ -61,9 +62,10 @@ export default function TodoMainPage() {
   return (
     <>
       <header>
+        <ModeToggle></ModeToggle>
         <HomeIcon className="m-[3%]" onClick={() => navigate("/")}></HomeIcon>
         <div className="flex justify-center mt-[5%]">
-          <h1 className="text-5xl font-landing font-bold">Todo List</h1>
+          <h1 className="text-5xl font-landing font-bold text-yellow-600 dark:text-yellow-500">Todo List</h1>
         </div>
       </header>
       <section>
@@ -80,7 +82,7 @@ export default function TodoMainPage() {
             }}
           ></Input>
           <Button
-            className="font-landing font-bold "
+            className="font-landing font-bold bg-yellow-600 "
             onClick={() => handleClick()}
           >
             Add
