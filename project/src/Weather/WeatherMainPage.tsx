@@ -12,6 +12,7 @@ import { useSearchByName } from "../hooks/useSearchByName";
 import { useDefounce } from "../hooks/useDebounce";
 import ErrorPage from "./Components/ErrorPage";
 import LoadingSkeleton from "./Components/LoadingSkeleton";
+import { ModeToggle } from "../components/modeToggle";
 
 export default function WeatherMainPage() {
   const navigate = useNavigate();
@@ -50,7 +51,10 @@ export default function WeatherMainPage() {
   return (
     <>
       <header>
-        <HomeIcon className="m-[2%]" onClick={() => navigate("/")}></HomeIcon>
+        <div className="flex m-5 gap-10">
+          <HomeIcon onClick={() => navigate("/")}></HomeIcon>
+          <ModeToggle></ModeToggle>
+        </div>
         <div className="flex justify-center mt-[5%]">
           <h1 className="text-blue-600 dark:text-sky-400 text-7xl font-landing font-bold text-center">
             Weather
@@ -68,7 +72,7 @@ export default function WeatherMainPage() {
           />
 
           {searchCity && searchCity.length > 0 && isOpen && (
-            <ul className="absolute top-full mt-1 w-full bg-white rounded-md shadow-lg border z-10">
+            <ul className="absolute top-full mt-1 w-full bg-sky-100 dark:bg-sky-400 dark:text-black rounded-md shadow-lg border z-10">
               {searchCity.map((city: any) => (
                 //todo: set input to ("") when selecting the city: criate a boolean state (isOpen?)
                 <li

@@ -23,7 +23,7 @@ export default function SearchCity({
         }}
       >
         <Input
-          className="text-center bg-sky-50 w-150 input-secondary font-landing "
+          className="text-center w-150 input-secondary font-landing "
           placeholder="Location/City"
           value={input}
           onChange={(e) => {
