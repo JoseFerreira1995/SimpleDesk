@@ -35,7 +35,10 @@ export default function SortableTodoCard({
     <div ref={setNodeRef} style={style} {...attributes}>
       <Card className="w-full max-w-sm bg-amber-50 ">
         <div className="flex justify-center pt-2">
-          <div {...listeners} className="cursor-grab active:cursor-grabbing">
+          <div
+            {...listeners}
+            className="cursor-grab active:cursor-grabbing dark:text-black"
+          >
             <GripVertical />
           </div>
         </div>
@@ -43,20 +46,22 @@ export default function SortableTodoCard({
         <CardHeader>
           <CardTitle className="flex gap-2 justify-center items-center">
             {todo.todo === "" ? (
-              <span className=" font-landing text-3xl">
+              <span className=" font-landing text-3xl ">
                 {todo.isChecked ? "No I'm not" : "Am I procrastinating?"}
               </span>
             ) : (
               <span
-                className="font-landing text-3xl"
+                className="font-landing text-3xl dark:text-black"
                 style={{
                   textDecoration: todo.isChecked ? "line-through" : "none",
                 }}
-              >{todo.todo}</span>
+              >
+                {todo.todo}
+              </span>
             )}
 
             <Checkbox
-              className="bg-white"
+              className="bg-white dark:bg-amber-400"
               checked={todo.isChecked}
               onCheckedChange={() => onToggle(todo.id)}
             />
@@ -64,7 +69,7 @@ export default function SortableTodoCard({
         </CardHeader>
 
         <CardContent>
-          <span className="font-landing text-2xl">
+          <span className="font-landing text-2xl dark:text-black">
             Date: {todo.day}/{todo.month}
           </span>
         </CardContent>

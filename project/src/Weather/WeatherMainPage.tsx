@@ -1,4 +1,4 @@
-import { HomeIcon, Key } from "lucide-react";
+import { HomeIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 import { useState } from "react";
@@ -12,11 +12,13 @@ import { useSearchByName } from "../hooks/useSearchByName";
 import { useDefounce } from "../hooks/useDebounce";
 import ErrorPage from "./Components/ErrorPage";
 import LoadingSkeleton from "./Components/LoadingSkeleton";
+import { ModeToggle } from "../components/modeToggle";
 
 export default function WeatherMainPage() {
   const navigate = useNavigate();
 
   const [input, setInput] = useState("");
+  const [isOpen, setIsOpen] = useState<boolean>(true);
   const [city, setCity] = useState<string>("Porto");
   const debounceSearch = useDefounce(input, 200);
 
@@ -49,7 +51,10 @@ export default function WeatherMainPage() {
   return (
     <>
       <header>
-        <HomeIcon className="m-[2%]" onClick={() => navigate("/")}></HomeIcon>
+        <div className="flex m-5 gap-10">
+          <HomeIcon onClick={() => navigate("/")}></HomeIcon>
+          <ModeToggle></ModeToggle>
+        </div>
         <div className="flex justify-center mt-[5%]">
           <h1 className="text-blue-600 dark:text-sky-400 text-7xl font-landing font-bold text-center">
             Weather
@@ -63,17 +68,19 @@ export default function WeatherMainPage() {
             input={input}
             onInputChange={setInput}
             onSearch={() => setCity(input)}
-            onEnter={() => setInput("")}
+            openDropdown={() => setIsOpen(true)}
           />
 
-          {searchCity && searchCity.length > 0 && (
-            <ul className="absolute top-full mt-1 w-full bg-white rounded-md shadow-lg border z-10">
+          {searchCity && searchCity.length > 0 && isOpen && (
+            <ul className="absolute top-full mt-1 w-full bg-sky-100 dark:bg-sky-400 dark:text-black rounded-md shadow-lg border z-10">
               {searchCity.map((city: any) => (
+                //todo: set input to ("") when selecting the city: criate a boolean state (isOpen?)
                 <li
                   key={`${city.lat}-${city.lon}`}
                   onClick={() => {
                     setCity(city.name);
-                    setInput("");
+                    setInput(city.name);
+                    setIsOpen(false);
                   }}
                   className="px-4 py-2 hover:bg-sky-100 cursor-pointer text-sm"
                 >

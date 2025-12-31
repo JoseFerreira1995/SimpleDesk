@@ -2,12 +2,15 @@ import { useNavigate } from "react-router-dom";
 import AppsCard from "../components/AppsCard";
 import Footer from "./Footer/Footer";
 import Header from "./Header/Header";
+import { ModeToggle } from "../components/modeToggle";
 
 export default function LandingPage() {
   const navigate = useNavigate();
   return (
     <>
+      <ModeToggle></ModeToggle>
       <Header></Header>
+
       <section>
         <div className="flex justify-center mt-[5%] p-10 gap-3 ">
           <div
