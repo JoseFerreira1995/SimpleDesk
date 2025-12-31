@@ -25,7 +25,10 @@ export default function LandingPage() {
           >
             <AppsCard title="Weather"></AppsCard>
           </div>
-          <div className=" size-25 bg-[#b2f2bb] rounded-2xl hover:rotate-3">
+          <div
+            onClick={() => navigate("/calculator")}
+            className=" size-25 bg-[#b2f2bb] rounded-2xl hover:rotate-3"
+          >
             <AppsCard title="Calculator"></AppsCard>
           </div>
           <div className=" size-25 bg-[#ffc9c9] rounded-2xl hover:rotate-3">
