@@ -31,7 +31,10 @@ export default function LandingPage() {
           >
             <AppsCard title="Calculator"></AppsCard>
           </div>
-          <div className=" size-25 bg-[#ffc9c9] rounded-2xl hover:rotate-3">
+          <div
+            onClick={() => navigate("/freespace")}
+            className=" size-25 bg-[#ffc9c9] rounded-2xl hover:rotate-3"
+          >
             <AppsCard title="FreeSpace"></AppsCard>
           </div>
         </div>
