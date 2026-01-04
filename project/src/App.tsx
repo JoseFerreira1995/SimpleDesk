@@ -5,6 +5,7 @@ import TodoMainPage from "./TodoList/TodoMainPage";
 import WeatherMainPage from "./Weather/WeatherMainPage";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ThemeProvider } from "./components/themeProvider";
+import CalculatorMainPage from "./Calculator/CalculatorMainPage";
 
 const queryClient = new QueryClient();
 function App() {
@@ -17,6 +18,10 @@ function App() {
               <Route path="/" element={<LandingPage />}></Route>
               <Route path="/todo" element={<TodoMainPage />}></Route>
               <Route path="/weather" element={<WeatherMainPage />}></Route>
+              <Route
+                path="/calculator"
+                element={<CalculatorMainPage />}
+              ></Route>
             </Routes>
           </BrowserRouter>
         </QueryClientProvider>
