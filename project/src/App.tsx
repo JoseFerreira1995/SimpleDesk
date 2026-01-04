@@ -6,6 +6,7 @@ import WeatherMainPage from "./Weather/WeatherMainPage";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ThemeProvider } from "./components/themeProvider";
 import CalculatorMainPage from "./Calculator/CalculatorMainPage";
+import CodeEditorMainPage from "./CodeEditor/CodeEditorMainPage";
 
 const queryClient = new QueryClient();
 function App() {
@@ -22,6 +23,7 @@ function App() {
                 path="/calculator"
                 element={<CalculatorMainPage />}
               ></Route>
+              <Route path="/freespace" element={<CodeEditorMainPage />}></Route>
             </Routes>
           </BrowserRouter>
         </QueryClientProvider>
