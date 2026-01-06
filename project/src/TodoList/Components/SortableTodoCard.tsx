@@ -33,50 +33,46 @@ export default function SortableTodoCard({
 
   return (
     <div ref={setNodeRef} style={style} {...attributes}>
-      <Card className="w-full max-w-sm bg-amber-50 ">
-        <div className="flex justify-center pt-2">
+      <Card className=" w-full bg-amber-50 border border-amber-200 rounded-xl shadow-sm hover:shadow-md transition hover:scale-99 ">
+        <div className="flex justify-end px-3 pt-2">
           <div
             {...listeners}
-            className="cursor-grab active:cursor-grabbing dark:text-black"
+            className="cursor-grab text-amber-500 opacity-60 hover:opacity-100"
           >
             <GripVertical />
           </div>
         </div>
 
-        <CardHeader>
-          <CardTitle className="flex gap-2 justify-center items-center">
-            {todo.todo === "" ? (
-              <span className=" font-landing text-3xl ">
-                {todo.isChecked ? "No I'm not" : "Am I procrastinating?"}
-              </span>
-            ) : (
-              <span
-                className="font-landing text-3xl dark:text-black"
-                style={{
-                  textDecoration: todo.isChecked ? "line-through" : "none",
-                }}
-              >
-                {todo.todo}
-              </span>
-            )}
-
+        <CardHeader className="pb-2">
+          <div className="flex items-start gap-3">
             <Checkbox
-              className="bg-white dark:bg-amber-400"
+              className="bg-white dark:bg-amber-400 mt-1"
               checked={todo.isChecked}
               onCheckedChange={() => onToggle(todo.id)}
             />
-          </CardTitle>
+            <CardTitle
+              className={`font-landing text-3xl leading-snug ${
+                todo.isChecked ? "line-through opacity-50" : ""
+              }`}
+            >
+              {todo.todo || (
+                <span className="italic opacity-70">
+                  {todo.isChecked ? "No I'm not" : "Am I procrastinating?"}
+                </span>
+              )}
+            </CardTitle>
+          </div>
         </CardHeader>
 
-        <CardContent>
-          <span className="font-landing text-2xl dark:text-black">
+        <CardContent className="pt-0">
+          <span className="text-sm text-amber-700 opacity-70">
             Date: {todo.day}/{todo.month}
           </span>
         </CardContent>
 
-        <CardFooter>
+        <CardFooter className="pt-2">
           <Button
-            className="w-full bg-red-600 text-amber-50"
+            className="text-red-600 hover:bg-red-50 ml-auto"
             onClick={() => onDelete(todo.id)}
           >
             Delete

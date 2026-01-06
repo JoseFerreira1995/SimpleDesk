@@ -1,6 +1,3 @@
-import { HomeIcon } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-
 import { useState } from "react";
 
 import useWeatherByCity from "../hooks/useWeatherByCity";
@@ -12,11 +9,9 @@ import { useSearchByName } from "../hooks/useSearchByName";
 import { useDefounce } from "../hooks/useDebounce";
 import ErrorPage from "./Components/ErrorPage";
 import LoadingSkeleton from "./Components/LoadingSkeleton";
-import { ModeToggle } from "../components/modeToggle";
+import Header from "../components/Header";
 
 export default function WeatherMainPage() {
-  const navigate = useNavigate();
-
   const [input, setInput] = useState("");
   const [isOpen, setIsOpen] = useState<boolean>(true);
   const [city, setCity] = useState<string>("Porto");
@@ -29,6 +24,8 @@ export default function WeatherMainPage() {
     isError: foreCastError,
     isLoading: foreCastLoading,
   } = useWeatherForecast(city);
+
+  console.log(forecast);
 
   const {
     data: searchCity,
@@ -50,20 +47,10 @@ export default function WeatherMainPage() {
 
   return (
     <>
-      <header>
-        <div className="flex m-5 gap-10">
-          <HomeIcon onClick={() => navigate("/")}></HomeIcon>
-          <ModeToggle></ModeToggle>
-        </div>
-        <div className="flex justify-center mt-[5%]">
-          <h1 className="text-blue-600 dark:text-sky-400 text-7xl font-landing font-bold text-center">
-            Weather
-          </h1>
-        </div>
-      </header>
+      <Header title="Weather" textColor="#38bdf8"></Header>
 
       <section>
-        <div className=" relative flex justify-center m-[5%] gap-5 ">
+        <div className=" relative flex justify-center m-8 gap-5 ">
           <SearchCity
             input={input}
             onInputChange={setInput}
@@ -72,9 +59,8 @@ export default function WeatherMainPage() {
           />
 
           {searchCity && searchCity.length > 0 && isOpen && (
-            <ul className="absolute top-full mt-1 w-full bg-sky-100 dark:bg-sky-400 dark:text-black rounded-md shadow-lg border z-10">
+            <ul className="absolute top-full mt-1 w-full sm:w-64 md:w-80 bg-sky-100 dark:bg-sky-400 opacity-90 hover:opacity-100 transition-normal dark:text-black rounded-lg shadow-lg border z-10">
               {searchCity.map((city: any) => (
-                //todo: set input to ("") when selecting the city: criate a boolean state (isOpen?)
                 <li
                   key={`${city.lat}-${city.lon}`}
                   onClick={() => {
@@ -82,7 +68,7 @@ export default function WeatherMainPage() {
                     setInput(city.name);
                     setIsOpen(false);
                   }}
-                  className="px-4 py-2 hover:bg-sky-100 cursor-pointer text-sm"
+                  className="px-4 py-3 hover:bg-sky-200 dark:hover:bg-sky-500 hover:rounded-lg cursor-pointer text-sm sm:text-base"
                 >
                   {city.name} {city.country}
                 </li>
@@ -93,7 +79,7 @@ export default function WeatherMainPage() {
 
         {currentWeather && (
           <>
-            <div className="flex justify-center gap-10 m-[5%]">
+            <div className="w-full flex flex-col sm:flex-row justify-center gap-4 sm:gap-10 m-[5%]">
               <MainWeatherCard currentWeather={currentWeather} />
               <ForecastBar forecast={forecast} />
             </div>

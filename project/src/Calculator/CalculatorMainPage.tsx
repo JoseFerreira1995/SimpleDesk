@@ -1,15 +1,12 @@
-import { HomeIcon } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-
 import * as math from "mathjs";
 
 import { useState } from "react";
 
 import CalculatorButtons from "./components/CalculatorButtons";
 import CalculatorInput from "./components/CalculatorInput";
+import Header from "../components/Header";
 
 export default function CalculatorMainPage() {
-  const navigate = useNavigate();
   const [input, setInput] = useState<string>("");
   const [result, setResult] = useState("");
 
@@ -29,106 +26,94 @@ export default function CalculatorMainPage() {
 
   return (
     <>
-      <header>
-        <HomeIcon className="m-[2%]" onClick={() => navigate("/")}></HomeIcon>
-        <div className="flex justify-center mt-[5%]">
-          <h1 className="text-green-600 dark:text-teal-600 text-7xl font-landing font-bold text-center">
-            Calculator
-          </h1>
-        </div>
-      </header>
-      <section>
-        <div className="bg-teal-900 m-25 rounded-2xl h-180 ">
-          <div className="m-10 p-8">
+      <Header title="Calculator" textColor="#0d9488"></Header>
+      <section className="flex justify-center px-4 py-10">
+        <div className="w-full max-w-sm bg-teal-800 rounded-2xl shadow-xl p-4 sm:p-6 ">
+          <div className="mb-6 rounded-xl bg-teal-950 p-4 shadow-inner">
             <CalculatorInput value={input} result={result}></CalculatorInput>
           </div>
-          <div className="grid justify-center m-1">
-            <div>
-              <CalculatorButtons
-                symbol={"AC"}
-                handleClick={resetInputs}
-              ></CalculatorButtons>
-              <CalculatorButtons
-                symbol={"+/-"}
-                handleClick={handleAddButtons}
-              ></CalculatorButtons>
-              <CalculatorButtons
-                symbol={"%"}
-                handleClick={handleAddButtons}
-              ></CalculatorButtons>
-              <CalculatorButtons
-                symbol={"/"}
-                handleClick={handleAddButtons}
-              ></CalculatorButtons>
-            </div>
-            <div>
-              <CalculatorButtons
-                symbol={7}
-                handleClick={handleAddButtons}
-              ></CalculatorButtons>
-              <CalculatorButtons
-                symbol={8}
-                handleClick={handleAddButtons}
-              ></CalculatorButtons>
-              <CalculatorButtons
-                symbol={9}
-                handleClick={handleAddButtons}
-              ></CalculatorButtons>
-              <CalculatorButtons
-                symbol={"*"}
-                handleClick={handleAddButtons}
-              ></CalculatorButtons>
-            </div>
-            <div>
-              <CalculatorButtons
-                symbol={4}
-                handleClick={handleAddButtons}
-              ></CalculatorButtons>
-              <CalculatorButtons
-                symbol={5}
-                handleClick={handleAddButtons}
-              ></CalculatorButtons>
-              <CalculatorButtons
-                symbol={6}
-                handleClick={handleAddButtons}
-              ></CalculatorButtons>
-              <CalculatorButtons
-                symbol={"-"}
-                handleClick={handleAddButtons}
-              ></CalculatorButtons>
-            </div>
-            <div>
-              <CalculatorButtons
-                symbol={1}
-                handleClick={handleAddButtons}
-              ></CalculatorButtons>
-              <CalculatorButtons
-                symbol={2}
-                handleClick={handleAddButtons}
-              ></CalculatorButtons>
-              <CalculatorButtons
-                symbol={3}
-                handleClick={handleAddButtons}
-              ></CalculatorButtons>
-              <CalculatorButtons
-                symbol={"+"}
-                handleClick={handleAddButtons}
-              ></CalculatorButtons>
-            </div>
-            <div>
-              <CalculatorButtons
-                symbol={0}
-                handleClick={handleAddButtons}
-              ></CalculatorButtons>
-              <CalculatorButtons
-                symbol={"."}
-                handleClick={handleAddButtons}
-              ></CalculatorButtons>
-              <CalculatorButtons
-                symbol={"="}
-                handleClick={calculate}
-              ></CalculatorButtons>
-            </div>
+          <div className="grid grid-cols-4 gap-3">
+            <CalculatorButtons
+            bgCcolor="#f87171"
+              symbol={"AC"}
+              handleClick={resetInputs}
+            ></CalculatorButtons>
+            <CalculatorButtons
+              symbol={"+/-"}
+              handleClick={handleAddButtons}
+            ></CalculatorButtons>
+            <CalculatorButtons
+              symbol={"%"}
+              handleClick={handleAddButtons}
+            ></CalculatorButtons>
+            <CalculatorButtons
+              symbol={"/"}
+              handleClick={handleAddButtons}
+            ></CalculatorButtons>
+
+            <CalculatorButtons
+              symbol={7}
+              handleClick={handleAddButtons}
+            ></CalculatorButtons>
+            <CalculatorButtons
+              symbol={8}
+              handleClick={handleAddButtons}
+            ></CalculatorButtons>
+            <CalculatorButtons
+              symbol={9}
+              handleClick={handleAddButtons}
+            ></CalculatorButtons>
+            <CalculatorButtons
+              symbol={"*"}
+              handleClick={handleAddButtons}
+            ></CalculatorButtons>
+
+            <CalculatorButtons
+              symbol={4}
+              handleClick={handleAddButtons}
+            ></CalculatorButtons>
+            <CalculatorButtons
+              symbol={5}
+              handleClick={handleAddButtons}
+            ></CalculatorButtons>
+            <CalculatorButtons
+              symbol={6}
+              handleClick={handleAddButtons}
+            ></CalculatorButtons>
+            <CalculatorButtons
+              symbol={"-"}
+              handleClick={handleAddButtons}
+            ></CalculatorButtons>
+
+            <CalculatorButtons
+              symbol={1}
+              handleClick={handleAddButtons}
+            ></CalculatorButtons>
+            <CalculatorButtons
+              symbol={2}
+              handleClick={handleAddButtons}
+            ></CalculatorButtons>
+            <CalculatorButtons
+              symbol={3}
+              handleClick={handleAddButtons}
+            ></CalculatorButtons>
+            <CalculatorButtons
+              symbol={"+"}
+              handleClick={handleAddButtons}
+            ></CalculatorButtons>
+
+            <CalculatorButtons
+              symbol={0}
+              handleClick={handleAddButtons}
+            ></CalculatorButtons>
+            <CalculatorButtons
+              symbol={"."}
+              handleClick={handleAddButtons}
+            ></CalculatorButtons>
+            <CalculatorButtons
+              symbol={"="}
+              handleClick={calculate}
+            ></CalculatorButtons>
           </div>
         </div>
       </section>

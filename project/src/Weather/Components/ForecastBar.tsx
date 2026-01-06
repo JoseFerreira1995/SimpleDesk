@@ -7,15 +7,17 @@ import {
 } from "../../components/ui/card";
 
 export default function ForecastBar({ forecast }: { forecast: any }) {
+  const openWeatherIconsUrl: string = "https://openweathermap.org/img/wn/";
+  const iconSize: string = "@2x.png";
   return (
     <>
-      <Card className="bg-sky-50 w-[18%] rounded-xl shadow-sm">
+      <Card className="bg-white/80 dark:bg-sky-700/80 w-full sm:w-1/3 md:w-1/4 rounded-xl shadow-sm">
         <CardHeader className="flex items-center gap-3 border-b border-sky-100 pb-3">
           <Calendar1Icon className="text-sky-500"></Calendar1Icon>
           <CardTitle className="text-sky-500 text-lg">5 Day Forecast</CardTitle>
         </CardHeader>
         <CardContent className="pt-4">
-          <div className="flex flex-col gap-3">
+          <div className=" gap-3 overflow-x-auto grid ">
             {forecast &&
               forecast.list
                 .filter((item) => item.dt_txt.includes("12:00:00"))
@@ -31,14 +33,21 @@ export default function ForecastBar({ forecast }: { forecast: any }) {
                   return (
                     <div
                       key={element.dt_txt}
-                      className="flex items-center justify-between rounded-lg bg-white px-5 py-3 shadow-sm hover:bg-sky-100 transition"
+                      className="flex flex-row items-center justify-between rounded-lg bg-white/80 p-4 shadow-md hover:scale-95 hover:bg-sky-100 transition-all min-2-[90px]"
                     >
-                      <span className="text-sm text-sky-700 font-medium">
+                      <span className=" flex gap-4 text-sm text-sky-700 font-medium">
                         {date}
+                        {element.weather.map((item) => (
+                          <img
+                            className="size-10"
+                            src={`${openWeatherIconsUrl}${item.icon}${iconSize}`}
+                          ></img>
+                        ))}
                       </span>
 
                       <span className={`text-lg font-semibold ${tempColor}`}>
-                        {Math.round(element.main.temp)}°
+                        {Math.round(element.main.temp_max)}°{" "}
+                        {Math.round(element.main.temp_min)}°
                       </span>
                     </div>
                   );

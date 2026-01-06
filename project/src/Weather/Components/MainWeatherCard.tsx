@@ -17,15 +17,15 @@ export default function MainWeatherCard({
   const sunSetTime = new Date(currentWeather.sys.sunset * 1000);
 
   return (
-    <Card className="bg-sky-50 w-[45%] rounded-2xl shadow-lg">
+    <Card className="bg-sky-50/80 dark:bg-sky-800/70 w-full sm:w-2/3 md:w-1/2 rounded-2xl  ">
       {/* HEADER */}
       <CardHeader className="flex flex-row items-center gap-3 border-b pb-4">
         <LocateFixedIcon className="text-sky-500" />
         <div>
-          <CardTitle className="text-xl font-semibold">
+          <CardTitle className="text-xl font-semibold text-sky-500  dark:text-cyan-400">
             {currentWeather.name}
           </CardTitle>
-          <CardDescription className="text-sm">
+          <CardDescription className="text-sm dark:text-gray-100">
             {currentWeather.sys.country}
           </CardDescription>
         </div>
@@ -35,14 +35,14 @@ export default function MainWeatherCard({
       <CardContent className="mt-6 space-y-6">
         {/* Temperature */}
         <div className="text-center">
-          <CardTitle className="text-7xl font-bold">
+          <CardTitle className="text-7xl font-bold text-sky-500   dark:text-cyan-400">
             {Math.round(currentWeather.main.temp)}°
           </CardTitle>
-          <CardDescription className="capitalize text-base">
+          <CardDescription className="capitalize text-base dark:text-gray-100">
             {currentWeather.weather[0].description}
           </CardDescription>
 
-          <div className="flex justify-center gap-6 mt-3 text-sm text-muted-foreground">
+          <div className="flex justify-center gap-6 mt-3 text-sm text-muted-foreground dark:text-gray-100">
             <span>Min: {Math.floor(currentWeather.main.temp_min)}°</span>
             <span>Max: {Math.round(currentWeather.main.temp_max)}°</span>
           </div>
@@ -74,9 +74,9 @@ export default function MainWeatherCard({
           ].map((item) => (
             <div
               key={item.label}
-              className="bg-sky-200/60 rounded-xl p-4 flex flex-col gap-1"
+              className="bg-sky-200/60 rounded-xl p-4 flex flex-col gap-1 hover:scale-95 transition"
             >
-              <span className="text-xs text-muted-foreground">
+              <span className="text-xs font-bold text-muted-foreground dark:text-gray-300">
                 {item.label}
               </span>
               <span className="text-lg font-semibold">{item.value}</span>
@@ -87,7 +87,7 @@ export default function MainWeatherCard({
 
       {/* FOOTER */}
       <CardFooter className="flex gap-4 pt-6 border-t">
-        <div className="flex items-center gap-3 bg-orange-200 w-1/2 p-4 rounded-xl">
+        <div className="flex items-center gap-3 bg-orange-200 w-1/2 p-4 rounded-xl hover:scale-95 transition">
           <SunriseIcon className="bg-orange-500 text-white rounded-md p-1" />
           <div className="flex flex-col">
             <span className="text-xs text-muted-foreground">Sunrise</span>
@@ -100,7 +100,7 @@ export default function MainWeatherCard({
           </div>
         </div>
 
-        <div className="flex items-center gap-3 bg-fuchsia-200 w-1/2 p-4 rounded-xl">
+        <div className="flex items-center gap-3 bg-fuchsia-200 w-1/2 p-4 rounded-xl hover:scale-95 transition">
           <SunsetIcon className="bg-fuchsia-500 text-white rounded-md p-1" />
           <div className="flex flex-col">
             <span className="text-xs text-muted-foreground">Sunset</span>

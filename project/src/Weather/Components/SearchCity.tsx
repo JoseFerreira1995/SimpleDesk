@@ -23,7 +23,7 @@ export default function SearchCity({
         }}
       >
         <Input
-          className="text-center w-150 input-secondary font-landing "
+          className="bg-sky-50 dark:bg-sky-400 rounded-lg shadow-sm text-center w-full sm:w-64 input-secondary focus:ouline-none focus:ring-2 focus:ring-sky-500 transition-all  "
           placeholder="Location/City"
           value={input}
           onChange={(e) => {
@@ -32,10 +32,6 @@ export default function SearchCity({
           }}
         ></Input>
       </form>
-      <ToggleGroup type="multiple">
-        <ToggleGroupItem value="c">C°</ToggleGroupItem>
-        <ToggleGroupItem value="c">F°</ToggleGroupItem>
-      </ToggleGroup>
     </>
   );
 }
