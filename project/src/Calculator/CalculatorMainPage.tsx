@@ -38,7 +38,7 @@ export default function CalculatorMainPage() {
         </div>
       </header>
       <section>
-        <div className="bg-teal-900 m-25 rounded-2xl h-130 ">
+        <div className="bg-teal-900 m-25 rounded-2xl h-180 ">
           <div className="m-10 p-8">
             <CalculatorInput value={input} result={result}></CalculatorInput>
           </div>
