@@ -4,23 +4,34 @@
 
 It includes:
 
-- **Todo List** – keep track of your tasks  
-- **Weather App** – quick weather lookup  
-- **Calculator** – simple and fast calculations  
-- **Productivity Board** – a Trello-style space for organizing ideas  
+- **Todo List** – draggable tasks with completion states  
+- **Weather App** – real-time weather + 5-day forecast  
+- **Calculator** – custom calculator logic & UI  
+- **Code Playground** – run and test code directly in the browser  
 
-Designed with simplicity, speed, and a playful look.
+Designed with simplicity, speed, responsiveness, and a bit of personality.
 
 ---
 
 ##  Features
 
-- 🧩 Modular apps accessible from a central dashboard  
-- 🎨 Clean UI built with **TailwindCSS** + **shadcn/ui**  
-- 🛣️ Smooth routing using **react-router-dom**  
-- ✍️ Fully written in **TypeScript**  
-- ⚡ Fast development workflow powered by **Vite**  
-- 📱 Mobile-friendly layout  
+- 🧩 Modular apps accessible from a central dashboard
+
+- 🧠 Focus on **state management** & **component composition**
+
+- 🎨 Clean UI built with **TailwindCSS** and **shadcn/ui**
+
+- 🛣️ Client-side routing using **React Router v7**
+
+- ⚡ Data fetching & mutations handled with **TanStack Query**
+
+- ✍️ Fully written in **TypeScript**
+
+- 📱 Responsive design (mobile → desktop)
+
+- 🖱️ Drag & drop interactions
+
+- 🌗 Light / Dark mode support
 
 ---
 
@@ -65,17 +76,43 @@ npm run dev
 
 ## Tech Stack
 
-- React
+**Core**
+
+- React 19
 
 - TypeScript
 
-- React Router DOM
+- Vite
+
+**Routing & State**
+
+- react-router-dom
+
+- @tanstack/react-query
+
+**Styling & UI**
 
 - TailwindCSS
 
 - shadcn/ui
 
-- Vite
+- Radix UI
+
+- Lucide Icons
+
+- Flaticon Icons
+
+**Interaction & Utilities**
+
+- @dnd-kit — drag & drop
+
+- Monaco Editor — code editor
+
+- mathjs — calculator logic
+
+- react-resizable-panels — layout experiments
+
+- clsx + tailwind-merge — conditional styling
 
 
 
