@@ -3,8 +3,6 @@ import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
 import { Label } from "../components/ui/label";
 
-import { HomeIcon } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 import { closestCenter, DndContext, type DragEndEvent } from "@dnd-kit/core";
 import {
   arrayMove,
@@ -13,12 +11,12 @@ import {
 } from "@dnd-kit/sortable";
 import type { Todo } from "./types";
 import SortableTodoCard from "./Components/SortableTodoCard";
-import { ModeToggle } from "../components/modeToggle";
+
+import Header from "../components/Header";
 
 let nextId: number = 0;
 
 export default function TodoMainPage() {
-  const navigate = useNavigate();
   const [text, setText] = useState<string>("");
   const [todo, setTodo] = useState<Todo[]>([]);
 
@@ -61,54 +59,50 @@ export default function TodoMainPage() {
 
   return (
     <>
-      <header>
-        <ModeToggle></ModeToggle>
-        <HomeIcon className="m-[3%]" onClick={() => navigate("/")}></HomeIcon>
-        <div className="flex justify-center mt-[5%]">
-          <h1 className="text-5xl font-landing font-bold text-yellow-600 dark:text-yellow-500">Todo List</h1>
-        </div>
-      </header>
-      <section>
-        <div className="flex justify-center mt-[10%] ml-[36%] max-w-sm items-center gap-2 ">
-          <Label className="font-landing text-2xl">Add Todo</Label>
-          <Input
-            className=" text-center bg-amber-50 "
-            value={text}
-            onChange={(event) => setText(event.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                handleClick();
-              }
-            }}
-          ></Input>
-          <Button
-            className="font-landing font-bold bg-yellow-600 "
-            onClick={() => handleClick()}
-          >
-            Add
-          </Button>
-        </div>
+      <Header title={"Todo-list"} textColor="#ca8a04"></Header>
+      <section className="min-h-screen flex justify-center py-20">
+        <div className=" w-full max-w-xl">
+          <div className="mb-8 rounded-2xl bg-white border shadow-sm p-4 flex items-center gap-3">
+            <Input
+              className="flex-1 bg-transparent border-none focus-visible:ring-0 text-black"
+              placeholder="What needs to be done?"
+              value={text}
+              onChange={(event) => setText(event.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleClick();
+                }
+              }}
+            ></Input>
+            <Button
+              className="bg-amber-600 hover:bg-amber-700 font-bold"
+              onClick={() => handleClick()}
+            >
+              Add
+            </Button>
+          </div>
 
-        <DndContext
-          collisionDetection={closestCenter}
-          onDragEnd={handleDragEnd}
-        >
-          <SortableContext
-            items={todo.map((t) => t)}
-            strategy={rectSortingStrategy}
+          <DndContext
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}
           >
-            <div className="grid grid-cols-4 m-[10%] text-center gap-2 ">
-              {todo.map((todos) => (
-                <SortableTodoCard
-                  key={todos.id}
-                  todo={todos}
-                  onDelete={handleDeleteTodo}
-                  onToggle={handleChangeBox}
-                />
-              ))}
-            </div>
-          </SortableContext>
-        </DndContext>
+            <SortableContext
+              items={todo.map((t) => t)}
+              strategy={rectSortingStrategy}
+            >
+              <div className="space-y-3 ">
+                {todo.map((todos) => (
+                  <SortableTodoCard
+                    key={todos.id}
+                    todo={todos}
+                    onDelete={handleDeleteTodo}
+                    onToggle={handleChangeBox}
+                  />
+                ))}
+              </div>
+            </SortableContext>
+          </DndContext>
+        </div>
       </section>
     </>
   );
