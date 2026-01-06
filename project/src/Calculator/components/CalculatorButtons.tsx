@@ -11,7 +11,7 @@ export default function CalculatorButtons({
 }: ButtonTypes) {
   return (
     <>
-      <Button className="m-2" onClick={() => handleClick(symbol)}>
+      <Button className="m-2 p-10" onClick={() => handleClick(symbol)}>
         {symbol}
       </Button>
     </>
