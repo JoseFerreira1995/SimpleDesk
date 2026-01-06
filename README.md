@@ -37,9 +37,7 @@ Designed with simplicity, speed, responsiveness, and a bit of personality.
 
 ## Preview
 
-> 
->  
-> 
+<img width="877" height="612" alt="Captura de ecrã 2026-01-06, às 16 44 40" src="https://github.com/user-attachments/assets/a6ef96b0-e881-44a9-9db2-7ec06c48a022" />
 
 ---
 
