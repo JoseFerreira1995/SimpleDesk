@@ -1,5 +1,6 @@
 import {
   CODE_READER_BASE_URL,
+  GEO_URL,
   WEATHER_API,
   WEATHER_BASE_URL,
 } from "../config/env";
@@ -39,7 +40,7 @@ export const getWeatherByCityName = async (city: string) => {
 export const getCityName = async (cityName: string) => {
   if (cityName.length < 2) return [];
   const response = await fetch(
-    `${WEATHER_BASE_URL}/direct?q=${cityName}&limit=5&appid=${WEATHER_API}`
+    `${GEO_URL}/direct?q=${cityName}&limit=5&appid=${WEATHER_API}`
   );
   if (!response.ok) {
     throw new Error("Error trying to search country/city");
