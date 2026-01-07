@@ -1,9 +1,9 @@
-import { LANGUAGE_VERSIONS } from "../CodeEditor/Constants";
-
-const API_KEY = "57f92327e627e53f4d784b6513b38b05";
-const BASE_URL = "https://api.openweathermap.org/data/2.5";
-const GEO_URL = "https://api.openweathermap.org/geo/1.0";
-const CODE_BASE_URL = "https://emkc.org/api/v2/piston";
+import {
+  CODE_READER_BASE_URL,
+  WEATHER_API,
+  WEATHER_BASE_URL,
+} from "../config/env";
+import { LANGUAGE_VERSIONS } from "../Features/CodeEditor/Constants";
 
 type RunCodePayload = {
   language: string;
@@ -12,7 +12,7 @@ type RunCodePayload = {
 
 export const getWeatherForecast = async (city: string) => {
   const response = await fetch(
-    `${BASE_URL}/forecast?q=${city}&appid=${API_KEY}&units=metric`
+    `${WEATHER_BASE_URL}/forecast?q=${city}&appid=${WEATHER_API}&units=metric`
   );
 
   if (!response.ok) {
@@ -26,7 +26,7 @@ export const getWeatherForecast = async (city: string) => {
 
 export const getWeatherByCityName = async (city: string) => {
   const response = await fetch(
-    `${BASE_URL}/weather?q=${city}&appid=${API_KEY}&units=metric`
+    `${WEATHER_BASE_URL}/weather?q=${city}&appid=${WEATHER_API}&units=metric`
   );
 
   if (!response.ok) {
@@ -39,7 +39,7 @@ export const getWeatherByCityName = async (city: string) => {
 export const getCityName = async (cityName: string) => {
   if (cityName.length < 2) return [];
   const response = await fetch(
-    `${GEO_URL}/direct?q=${cityName}&limit=5&appid=${API_KEY}`
+    `${WEATHER_BASE_URL}/direct?q=${cityName}&limit=5&appid=${WEATHER_API}`
   );
   if (!response.ok) {
     throw new Error("Error trying to search country/city");
@@ -50,7 +50,7 @@ export const getCityName = async (cityName: string) => {
 };
 
 export const runCode = async ({ language, sourceCode }: RunCodePayload) => {
-  const response = await fetch(`${CODE_BASE_URL}/execute`, {
+  const response = await fetch(`${CODE_READER_BASE_URL}/execute`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
