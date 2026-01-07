@@ -1,12 +1,13 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
-import LandingPage from "./LandingPage/LandingPage";
-import TodoMainPage from "./TodoList/TodoMainPage";
-import WeatherMainPage from "./Weather/WeatherMainPage";
+
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ThemeProvider } from "./components/themeProvider";
-import CalculatorMainPage from "./Calculator/CalculatorMainPage";
-import CodeEditorMainPage from "./CodeEditor/CodeEditorMainPage";
+import LandingPage from "./Features/LandingPage/LandingPage";
+import TodoMainPage from "./Features/TodoList/TodoMainPage";
+import WeatherMainPage from "./Features/Weather/WeatherMainPage";
+import CalculatorMainPage from "./Features/Calculator/CalculatorMainPage";
+import CodeEditorMainPage from "./Features/CodeEditor/CodeEditorMainPage";
 
 const queryClient = new QueryClient();
 function App() {
