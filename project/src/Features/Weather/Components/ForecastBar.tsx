@@ -22,7 +22,7 @@ export default function ForecastBar({ forecast }: { forecast: any }) {
               forecast.list
                 .filter((item) => item.dt_txt.includes("12:00:00"))
                 .map((element) => {
-                  const date = new Date(element.dt * 1000).getDate();
+                  const date = new Date(element.dt * 1000);
                   const tempColor =
                     element.main.temp > 25
                       ? "text-red-500"
@@ -36,7 +36,7 @@ export default function ForecastBar({ forecast }: { forecast: any }) {
                       className="flex flex-row items-center justify-between rounded-lg bg-white/80 p-4 shadow-md hover:scale-95 hover:bg-sky-100 transition-all min-2-[90px]"
                     >
                       <span className=" flex gap-4 text-sm text-sky-700 font-medium">
-                        {date}
+                        {date.getDate()}/{date.getMonth() + 1}
                         {element.weather.map((item) => (
                           <img
                             className="size-10"

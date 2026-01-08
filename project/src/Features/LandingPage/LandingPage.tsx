@@ -11,7 +11,7 @@ export default function LandingPage() {
   return (
     <>
       <header>
-        <div className="flex justify-between items-center m-4 sm:m-6 gap-6 ">
+        <div className="flex justify-between items-center m- sm:m-6 gap-6 ">
           <ModeToggle></ModeToggle>
         </div>
         <div className="flex justify-center mt-4 sm:mt-12">
@@ -22,28 +22,28 @@ export default function LandingPage() {
       </header>
 
       <section>
-        <div className=" flex flex-col sm:flex-row justify-center mt-6 p-4 sm:p-10 gap-4 sm:gap-8 ">
+        <div className=" flex flex-col sm:flex-row justify-center mt-8 p-4 sm:p-12 gap-4 sm:gap-8 ">
           <div
             onClick={() => navigate("/todo")}
-            className=" w-full sm:size-25  bg-[#ffec99] rounded-2xl hover:rotate-3 hover:scale-150 hover:cursor-pointer transition-all"
+            className=" w-full sm:size-25  bg-[#ffec99] rounded-2xl hover:rotate-3 hover:scale-150 hover:cursor-pointer transition-all animate-bounce animation-duration-[3s]"
           >
             <AppsCard title="Todo List"></AppsCard>
           </div>
           <div
             onClick={() => navigate("/weather")}
-            className=" w-full sm:size-25 bg-[#a5d8ff] rounded-2xl hover:-rotate-3 hover:scale-150 hover:cursor-pointer transition-all"
+            className=" w-full sm:size-25 bg-[#a5d8ff] rounded-2xl hover:-rotate-3 hover:scale-150 hover:cursor-pointer transition-all animate-bounce animation-duration-[3.2s]"
           >
             <AppsCard title="Weather"></AppsCard>
           </div>
           <div
             onClick={() => navigate("/calculator")}
-            className=" w-full sm:size-25 bg-[#b2f2bb] rounded-2xl hover:rotate-3 hover:scale-150 hover:cursor-pointer transition-all"
+            className=" w-full sm:size-25 bg-[#b2f2bb] rounded-2xl hover:rotate-3 hover:scale-150 hover:cursor-pointer transition-all animate-bounce animation-duration-[3.4s]"
           >
             <AppsCard title="Calculator"></AppsCard>
           </div>
           <div
             onClick={() => navigate("/freespace")}
-            className=" w-full sm:size-25 bg-[#ffc9c9] rounded-2xl hover:-rotate-3 hover:scale-150 hover:cursor-pointer transition-all"
+            className=" w-full sm:size-25 bg-[#ffc9c9] rounded-2xl hover:-rotate-3 hover:scale-150 hover:cursor-pointer transition-all animate-bounce animation-duration-[3.6s]"
           >
             <AppsCard title="FreeSpace"></AppsCard>
           </div>
