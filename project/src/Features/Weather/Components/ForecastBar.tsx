@@ -6,8 +6,13 @@ import {
   CardTitle,
 } from "../../../components/ui/card";
 import { WEATHER_ICON_URL } from "../../../config/env";
+import type { ForecasTime, ForecastItem, ForecastResponse } from "../types";
 
-export default function ForecastBar({ forecast }: { forecast: any }) {
+interface ForecastBarProps {
+  forecast?: ForecastResponse;
+}
+
+export default function ForecastBar({ forecast }: ForecastBarProps) {
   const iconSize: string = "@2x.png";
   return (
     <>
@@ -20,8 +25,9 @@ export default function ForecastBar({ forecast }: { forecast: any }) {
           <div className=" gap-3 overflow-x-auto grid ">
             {forecast &&
               forecast.list
-                .filter((item) => item.dt_txt.includes("12:00:00"))
-                .map((element) => {
+                .filter((item: ForecasTime) => item.dt_txt.includes("12:00:00"))
+
+                .map((element: ForecastItem) => {
                   const date = new Date(element.dt * 1000);
                   const tempColor =
                     element.main.temp > 25
@@ -37,7 +43,7 @@ export default function ForecastBar({ forecast }: { forecast: any }) {
                     >
                       <span className=" flex gap-4 text-sm text-sky-700 font-medium">
                         {date.getDate()}/{date.getMonth() + 1}
-                        {element.weather.map((item) => (
+                        {element.weather.map((item: { icon: unknown }) => (
                           <img
                             className="size-10"
                             src={`${WEATHER_ICON_URL}${item.icon}${iconSize}`}

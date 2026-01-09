@@ -1,8 +1,8 @@
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "../../../components/ui/button";
 import { useRunCode } from "../../hooks/useRunCode";
 
-export default function Output({ language, editorRef }) {
+export default function Output({ language, editorRef }: any) {
   const { mutate, data, isPending } = useRunCode();
 
   const handleCode = () => {

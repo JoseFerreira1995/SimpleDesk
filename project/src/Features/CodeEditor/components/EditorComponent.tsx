@@ -10,7 +10,8 @@ export default function EditorComponent() {
   const [language, setLanguage] = useState<string>("javascript");
   const mode = useTheme();
 
-  function editorOnMount(editor) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  function editorOnMount(editor: any) {
     editorRef.current = editor;
     editor.focus();
   }

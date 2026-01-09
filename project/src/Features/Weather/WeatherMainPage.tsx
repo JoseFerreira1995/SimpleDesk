@@ -25,8 +25,6 @@ export default function WeatherMainPage() {
     isLoading: foreCastLoading,
   } = useWeatherForecast(city);
 
-  console.log(forecast);
-
   const {
     data: searchCity,
     isError: errorSearch,

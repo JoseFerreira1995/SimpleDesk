@@ -11,6 +11,7 @@ import {
 export default function MainWeatherCard({
   currentWeather,
 }: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   currentWeather: any;
 }) {
   const sunriseTime = new Date(currentWeather.sys.sunrise * 1000);

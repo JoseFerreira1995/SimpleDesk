@@ -1,18 +1,14 @@
 import { Input } from "../../../components/ui/input";
+import type { SearchCityProps } from "../types";
 
-type Props = {
-  input: string;
-  onSearch: () => void;
-  onInputChange: (value: string) => void;
-  openDropdown: () => void;
-};
+
 
 export default function SearchCity({
   input,
   onSearch,
   onInputChange,
   openDropdown,
-}: Props) {
+}: SearchCityProps) {
   return (
     <>
       <form
