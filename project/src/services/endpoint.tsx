@@ -4,10 +4,10 @@ import {
   WEATHER_API,
   WEATHER_BASE_URL,
 } from "../config/env";
-import { LANGUAGE_VERSIONS } from "../Features/CodeEditor/Constants";
+import { LANGUAGE_VERSIONS, type SupportedLanguage } from "../Features/CodeEditor/Constants";
 
 type RunCodePayload = {
-  language: string;
+  language: SupportedLanguage;
   sourceCode: string;
 };
 
