@@ -5,7 +5,24 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="dark light" />
-    <title>project</title>
+    <title>Simple Desk</title>
+
+    <!-- 2. Blocking script to apply the .dark class before body renders -->
+    <script>
+      (function () {
+        try {
+          const theme = localStorage.getItem("vite-ui-theme") || "dark";
+          const isDark =
+            theme === "dark" ||
+            (theme === "system" &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches);
+
+          if (isDark) {
+            document.documentElement.classList.add("dark");
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
